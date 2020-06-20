@@ -6,14 +6,9 @@ const helmet = require('helmet')
 const { NODE_ENV } = require('./config')
 const app = express()
 
-const cardRouter = require('./card/card-router')
-const listRouter = require('./list/list-router')
-
 const morganOption = (NODE_ENV === 'production')
   ? 'tiny'
     : 'common';
-
-const { v4: uuid } = require('uuid');
 
 app.use(morgan(morganOption))
 app.use(helmet())
@@ -29,9 +24,6 @@ app.use(function validateBearerToken(req, res, next) {
     // move to the next middleware
     next()
 })
-
-app.use(cardRouter)
-app.use(listRouter)
 
 app.use(function errorHandler(error, req, res, next) {
     let response
